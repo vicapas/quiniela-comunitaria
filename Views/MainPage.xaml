@@ -12,11 +12,11 @@
         <Grid ColumnSpacing="10">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition />
-                <ColumnDefinition Width="200" />
+                <ColumnDefinition Width="50" />
             </Grid.ColumnDefinitions>
             <Entry Grid.Column="0" Text="{Binding AddUserText}" HorizontalOptions="FillAndExpand" 
                    ReturnCommand="{Binding AddUserCommand}" />
-            <Button Grid.Column="1" Text="Añadir usuario" BackgroundColor="Gray">
+            <Button Grid.Column="1" ImageSource="outline_add_white_18dp.png" Padding="0" BackgroundColor="Gray">
                 <Button.GestureRecognizers>
                     <TapGestureRecognizer Command="{Binding AddUserCommand}" />
                 </Button.GestureRecognizers>
