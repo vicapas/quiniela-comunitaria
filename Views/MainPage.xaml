@@ -8,11 +8,24 @@
         <vm:MainViewModel />
     </ContentPage.BindingContext>
 
-    <VerticalStackLayout>
+    <VerticalStackLayout Margin="20" HorizontalOptions="FillAndExpand">
+        <Grid ColumnSpacing="10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition Width="200" />
+            </Grid.ColumnDefinitions>
+            <Entry Grid.Column="0" Text="{Binding AddUserText}" HorizontalOptions="FillAndExpand" 
+                   ReturnCommand="{Binding AddUserCommand}" />
+            <Button Grid.Column="1" Text="Añadir usuario" BackgroundColor="Gray">
+                <Button.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding AddUserCommand}" />
+                </Button.GestureRecognizers>
+            </Button>
+        </Grid>
         <ListView ItemsSource="{Binding UserList}">
             <ListView.ItemTemplate>
                 <DataTemplate>
-                    <Label Text="{Binding .}" />
+                    <TextCell Text="{Binding Name}" />
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
