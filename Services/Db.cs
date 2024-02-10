@@ -5,17 +5,20 @@ namespace QuinielaComunitaria.Services
 {
     public class Db
     {
-        const string DbFileName = "quinieladb.db3";
-        static string DbPath = Path.Combine(FileSystem.AppDataDirectory, DbFileName);
-        const SQLiteOpenFlags Flags = SQLiteOpenFlags.ReadWrite | SQLiteOpenFlags.Create |
-            SQLiteOpenFlags.SharedCache;
-        SQLiteAsyncConnection? Database;
+        static SQLiteAsyncConnection? DataBase;
 
-        public async Task Init()
+        static string DatabasePath => Path.Combine(FileSystem.AppDataDirectory, "quinieladb.db3");
+        const SQLiteOpenFlags FLAGS = SQLiteOpenFlags.ReadWrite | SQLiteOpenFlags.Create |
+            SQLiteOpenFlags.SharedCache;
+
+        public static async Task<SQLiteAsyncConnection> GetDb()
         {
-            if (Database is not null) return;
-            Database = new SQLiteAsyncConnection(DbPath, Flags);
-            var result = await Database.CreateTableAsync<User>();
+            if (DataBase == null)
+            {
+                DataBase = new(DatabasePath, FLAGS);
+                _ = await DataBase.CreateTableAsync<User>();
+            }
+            return DataBase;
         }
     }
 }

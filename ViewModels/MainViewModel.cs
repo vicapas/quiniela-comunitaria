@@ -16,7 +16,7 @@ namespace QuinielaComunitaria.ViewModels
                 {
                     userList = value;
                     OnPropertyChanged(nameof(UserList));
-                } 
+                }
             }
         }
 
@@ -35,17 +35,31 @@ namespace QuinielaComunitaria.ViewModels
         }
 
         public ICommand? AddUserCommand { get; set; }
+        public ICommand? AppearingCommand { get; set; }
 
         public MainViewModel()
         {
             AddUserCommand = new Command(AddUser);
+            AppearingCommand = new Command(OnAppearing);
         }
 
-        private void AddUser()
+        private async void AddUser()
         {
             if (string.IsNullOrEmpty(AddUserText)) return;
-            UserList.Add(new User {  Name = AddUserText });
+            var user = await App.UserLogic.AddUser(AddUserText);
+            UserList.Add(user);
             AddUserText = string.Empty;
+        }
+
+        private async void OnAppearing()
+        {
+            await LoadUsers();
+        }
+
+        private async Task LoadUsers()
+        {
+            var users = await App.UserLogic.GetUsers();
+            UserList = new ObservableCollection<User>(users);
         }
     }
 }
